@@ -24,6 +24,12 @@ static CGFloat upHeight; //正区间高度
 static CGFloat downHeight; //负区间高度
 #define UPSHAFTCOLOR [UIColor redColor]   //正轴颜色
 #define DOWNSHAFTCOLOR [UIColor greenColor]   //负轴颜色
+@interface DXMProfitChartView ()
+@property (nonatomic, strong) UIBezierPath *preBezierPath;
+@property (nonatomic, strong) UIBezierPath *nextBezierpath;
+
+@end
+
 @implementation DXMProfitChartView
 
 - (void)awakeFromNib{
@@ -88,6 +94,18 @@ static CGFloat downHeight; //负区间高度
     downHeight = (yCount - rowX -1) * everyY;
 }
 
+#pragma mark - CAAnimation
+- (CABasicAnimation *)animationWithKeyPath:(NSString *)keyPath duration:(NSTimeInterval)duration fromValue:(id)from toValue:(id)to{
+    CABasicAnimation *animation = [CABasicAnimation animation];
+    animation.duration = duration;
+    animation.keyPath = keyPath;
+    animation.fromValue = from;
+    animation.toValue = to;
+    animation.fillMode = kCAFillModeForwards;
+    animation.removedOnCompletion = NO;
+    return animation;
+}
+
 #pragma mark - 添加钱的label
 - (void)drawLabels{
     //Y轴
@@ -129,6 +147,7 @@ static CGFloat downHeight; //负区间高度
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(labelX, upHeight)];
     [path addLineToPoint:CGPointMake(allW + labelX, upHeight)];
+    
     CAShapeLayer *layer = [self chartLayer:path];
     layer.strokeColor = [UIColor grayColor].CGColor;
     layer.fillColor = [UIColor grayColor].CGColor;
@@ -142,8 +161,14 @@ static CGFloat downHeight; //负区间高度
         CGPoint point = [self columnPointWithIndex:i];
         CGRect rect = CGRectMake(point.x, point.y, columnWidth, upHeight - point.y);
         
+        UIBezierPath *prepath = [UIBezierPath bezierPathWithRect:CGRectMake(point.x, upHeight, columnWidth, 0)];
+        
         UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
+        
+        CABasicAnimation *animation = [self animationWithKeyPath:@"path" duration:0.5 fromValue:(__bridge id _Nullable)(prepath.CGPath) toValue:(__bridge id _Nullable)(path.CGPath)];
+        
         CAShapeLayer *layer = [self chartLayer:path];
+        [layer addAnimation:animation forKey:nil];
         layer.strokeColor = [_yValues[i] floatValue] >= 0 ? UPSHAFTCOLOR.CGColor : DOWNSHAFTCOLOR.CGColor;
         layer.fillColor =  [_yValues[i] floatValue] >= 0 ? UPSHAFTCOLOR.CGColor : DOWNSHAFTCOLOR.CGColor;
         [self.bgView.layer addSublayer:layer];
@@ -180,8 +205,8 @@ static CGFloat downHeight; //负区间高度
 
 #pragma mark - 画折线/曲线
 - (void)drawFoldLineOrCurve:(LineChartType)type{
-    UIBezierPath *path = [UIBezierPath bezierPath];
     CGPoint point = [self columnPointWithIndex:0];
+    UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(point.x + columnWidth / 2, point.y)];
     switch (type) {
         case LineChartType_Straight:
@@ -197,16 +222,15 @@ static CGFloat downHeight; //负区间高度
                     break;
                 CGPoint prePoint = CGPointMake([self columnPointWithIndex:i].x + columnWidth / 2, [self columnPointWithIndex:i].y);
                 CGPoint nowPoint = CGPointMake([self columnPointWithIndex:i + 1].x + columnWidth / 2, [self columnPointWithIndex:i + 1].y);
-                
                 // 两个控制点的两个x中点为X值，preY、nowY为Y值；
-                
                 [path addCurveToPoint:nowPoint controlPoint1:CGPointMake((nowPoint.x + prePoint.x)/2, prePoint.y) controlPoint2:CGPointMake((nowPoint.x+prePoint.x)/2, nowPoint.y)];
             }
             break;
-            
     }
+    CABasicAnimation *animation = [self animationWithKeyPath:@"strokeEnd" duration:5 fromValue:@0.0 toValue:@1.0];
     
     CAShapeLayer *layer = [self chartLayer:path];
+    [layer addAnimation:animation forKey:nil];
     layer.strokeColor = [UIColor redColor].CGColor;
     layer.fillColor = [UIColor clearColor].CGColor;
     [self.bgView.layer addSublayer:layer];
@@ -291,7 +315,7 @@ static CGFloat downHeight; //负区间高度
     //画点
     [self drawPoint:PointType_Circel];
     //画折线/曲线
-    [self drawFoldLineOrCurve:LineChartType_Curve];
+    [self drawFoldLineOrCurve:LineChartType_Straight];
 }
 
 @end

@@ -11,16 +11,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="161"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最近10单盈利状况" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9R-2m-D2c">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
-                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="25" id="lm4-28-j38"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" red="0.3411764706" green="0.36470588240000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHd-iM-HU3">
                     <rect key="frame" x="0.0" y="28" width="320" height="21"/>
                     <constraints>
@@ -47,12 +37,9 @@
                 <constraint firstAttribute="bottom" secondItem="Xv7-Xo-PIg" secondAttribute="bottom" constant="-1" id="6YS-TU-5pE"/>
                 <constraint firstItem="Xv7-Xo-PIg" firstAttribute="top" secondItem="oHd-iM-HU3" secondAttribute="bottom" constant="-7" id="8iT-Io-lce"/>
                 <constraint firstAttribute="trailing" secondItem="Xv7-Xo-PIg" secondAttribute="trailing" constant="15" id="GJX-T5-qX7"/>
-                <constraint firstItem="oHd-iM-HU3" firstAttribute="top" secondItem="H9R-2m-D2c" secondAttribute="bottom" constant="3" id="Gvs-Hz-XTx"/>
                 <constraint firstItem="oHd-iM-HU3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IwN-ho-HCL"/>
-                <constraint firstItem="H9R-2m-D2c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="JaM-RA-G10"/>
                 <constraint firstItem="Xv7-Xo-PIg" firstAttribute="top" secondItem="oHd-iM-HU3" secondAttribute="bottom" constant="4" id="NlM-WJ-zu4"/>
-                <constraint firstAttribute="trailing" secondItem="H9R-2m-D2c" secondAttribute="trailing" id="PZA-X9-Rjz"/>
-                <constraint firstItem="H9R-2m-D2c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="c8J-mn-Mzb"/>
+                <constraint firstItem="oHd-iM-HU3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="28" id="OLK-tU-O0w"/>
                 <constraint firstAttribute="trailing" secondItem="oHd-iM-HU3" secondAttribute="trailing" id="pSo-oo-jmN"/>
                 <constraint firstItem="Xv7-Xo-PIg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="pxD-GY-DaQ"/>
             </constraints>
